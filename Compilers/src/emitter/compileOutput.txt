@@ -1,0 +1,155 @@
+	.data
+	space: .asciiz "\n"
+	varx: .word 0
+	vary: .word 0
+	varcount: .word 0
+	.text
+	.globl main
+main:
+	li $v0 2
+	la $t0, varx
+	sw $v0 ($t0)
+	la $t0 varx
+	lw $v0 ($t0)
+	subu $sp $sp 4
+	sw $v0 ($sp)
+	li $v0 1
+	lw $t0 ($sp)
+	addu $sp $sp 4
+	addu $v0 $t0 $v0
+	la $t0, vary
+	sw $v0 ($t0)
+	la $t0 varx
+	lw $v0 ($t0)
+	subu $sp $sp 4
+	sw $v0 ($sp)
+	la $t0 vary
+	lw $v0 ($t0)
+	lw $t0 ($sp)
+	addu $sp $sp 4
+	addu $v0 $t0 $v0
+	la $t0, varx
+	sw $v0 ($t0)
+	la $t0 varx
+	lw $v0 ($t0)
+	subu $sp $sp 4
+	sw $v0 ($sp)
+	la $t0 vary
+	lw $v0 ($t0)
+	lw $t0 ($sp)
+	addu $sp $sp 4
+	mult $t0 $v0
+	mflo  $v0
+	move $a0 $v0
+	li $v0 1
+	syscall
+	la $a0 space
+	li $v0 4
+	syscall
+	la $t0 varx
+	lw $v0 ($t0)
+	move $t0, $v0
+	la $t0 vary
+	lw $v0 ($t0)
+	bgt $t0, $v0, endif1
+	j after1
+endif1:
+	la $t0 varx
+	lw $v0 ($t0)
+	move $a0 $v0
+	li $v0 1
+	syscall
+	la $a0 space
+	li $v0 4
+	syscall
+	la $t0 vary
+	lw $v0 ($t0)
+	move $a0 $v0
+	li $v0 1
+	syscall
+	la $a0 space
+	li $v0 4
+	syscall
+after1:
+	li $v0 14
+	move $t0, $v0
+	li $v0 14
+	beq $t0, $v0, endif2
+	j after2
+endif2:
+	li $v0 14
+	move $t0, $v0
+	li $v0 14
+	bne $t0, $v0, endif3
+	j after3
+endif3:
+	li $v0 3
+	move $a0 $v0
+	li $v0 1
+	syscall
+	la $a0 space
+	li $v0 4
+	syscall
+after3:
+	li $v0 14
+	move $t0, $v0
+	li $v0 14
+	ble $t0, $v0, endif4
+	j after4
+endif4:
+	li $v0 4
+	move $a0 $v0
+	li $v0 1
+	syscall
+	la $a0 space
+	li $v0 4
+	syscall
+after4:
+after2:
+	li $v0 15
+	move $t0, $v0
+	li $v0 14
+	bgt $t0, $v0, endif5
+	j after5
+endif5:
+	li $v0 5
+	move $a0 $v0
+	li $v0 1
+	syscall
+	la $a0 space
+	li $v0 4
+	syscall
+after5:
+	li $v0 1
+	la $t0, varcount
+	sw $v0 ($t0)
+loop6:
+	la $t0 varcount
+	lw $v0 ($t0)
+	move $t0, $v0
+	li $v0 15
+	ble $t0, $v0, endif6
+	j endloop6
+endif6:
+	la $t0 varcount
+	lw $v0 ($t0)
+	move $a0 $v0
+	li $v0 1
+	syscall
+	la $a0 space
+	li $v0 4
+	syscall
+	la $t0 varcount
+	lw $v0 ($t0)
+	subu $sp $sp 4
+	sw $v0 ($sp)
+	li $v0 1
+	lw $t0 ($sp)
+	addu $sp $sp 4
+	addu $v0 $t0 $v0
+	la $t0, varcount
+	sw $v0 ($t0)
+	j loop6
+endloop6:
+	li $v0 10
+	syscall
